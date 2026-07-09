@@ -1,16 +1,11 @@
 #!/usr/bin/env python3
-"""describe input data"""
-
 import pandas as pd
-
 df = pd.read_csv('Telco-Customer-Churn.csv')
-
 shape = df.shape
 data_types = df.dtypes
 head = df.head()
 missing_count = df.isnull().sum()
 duplicates = df.duplicated().sum()
-
 print("Shape:", shape)
 print("Dtypes:\n", data_types)
 print("First rows:\n", head)
