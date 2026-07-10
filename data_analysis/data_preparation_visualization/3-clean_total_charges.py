@@ -11,10 +11,16 @@ def clean_total_charges(df, method='drop'):
     'impute': Replace with MonthlyCharges * tenure
     Returns the modified DataFrame
     """
+    df_clean = df.copy()  # to not alter df
     if method == 'drop':
-        df = df.dropna(subset=['TotalCharges'])
+        df_clean = df_clean.dropna(subset=['TotalCharges'])
     elif method == 'impute':
-        df['TotalCharges'] = df['TotalCharges'].fillna(df['MonthlyCharges'] * df["tenure"])
+        df_clean['TotalCharges'] = (
+            df_clean['TotalCharges'].fillna(df_clean['MonthlyCharges']
+                                            * df_clean["tenure"])
+        )
     elif method == 'median':
-        df['TotalCharges'] = df['TotalCharges'].fillna(df['TotalCharges'].median())
-    return df
+        df_clean['TotalCharges'] = (
+            df_clean['TotalCharges'].fillna(df_clean['TotalCharges'].median())
+        )
+    return df_clean
