@@ -13,15 +13,15 @@ def plot_churn_distribution(df):
     # your code here
 
     # step 1 aggregation
-    val = df['Churn'].value_counts().values # list with values
-    values = df['Churn'].value_counts().index.tolist() # list with Value Names
+    val = df['Churn'].value_counts().values  # list with values
+    values = df['Churn'].value_counts().index.tolist()  # list with Value Names
 
     # define colors
     colors = ['skyblue', 'salmon']
 
-
+    # Step 2 plotting
     plt.bar(values, val, color=colors)
-    
+
     plt.title('Churn Distribution')
     plt.ylabel('Count')
     plt.show()
