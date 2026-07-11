@@ -54,6 +54,7 @@ def plot_continuous_distributions(df, columns_to_plot=None):
         # set the boundaries
 
         axes[i].set_title(f"{col} Histogram + KDE")
+        axes[i].set_ylabel("")
         # boxplot
         i += 1
         """
