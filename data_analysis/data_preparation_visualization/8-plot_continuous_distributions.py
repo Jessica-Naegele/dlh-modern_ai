@@ -44,17 +44,13 @@ def plot_continuous_distributions(df, columns_to_plot=None):
         xmax = data.max()
         axes[i].hist(data, bins=30, density=True, alpha=0.7, edgecolor='black')
         # calculate and plot KDE
-        data.plot(
-            kind='kde',
-            ax=axes[i],
-            color='red',
-            linestyle='--',
-            ind=np.linspace(xmin, xmax, 100)
-            )
+        kde = stats.gaussian_kde(data)
+        x_axis = np.linspace(xmin, xmax, 100)
+        axes[i].plot(x_axis, kde(x_axis), color="red", linestyle="--")
         # set the boundaries
 
         axes[i].set_title(f"{col} Histogram + KDE")
-        axes[i].set_ylabel("")
+
         # boxplot
         i += 1
         """
