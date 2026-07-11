@@ -17,6 +17,7 @@ def plot_categorical_vs_churn(df, col):
     df_group = df_copy.groupby(col)['Churn'].mean()
 
     # bar chart
+    plt.figure(figsize=(12, 8))
     ax = df_group.plot.bar(x=labels, y=values, ylabel='Churn Rate')
     ax.set_title(f'Churn Rate by {col}')
     ax.tick_params(axis='x', rotation=45)
