@@ -7,13 +7,14 @@ def plot_categorical_vs_churn(df, col):
     """visualizing churn rates per category"""
 
     # change the Churn values from Yes = 1 & No = 0
-    df['Churn'] = df['Churn'].replace({'Yes': 1, 'No': 0})
+    df_copy = df.copy()
+    df_copy['Churn'] = df_copy['Churn'].replace({'Yes': 1, 'No': 0})
 
     # how many % said Churn = Yes based on different categories
-    values = df.groupby(col)['Churn'].agg('mean').to_list()
-    labels = df.groupby(col)['Churn'].agg('mean').index.to_list()
+    values = df_copy.groupby(col)['Churn'].agg('mean').to_list()
+    labels = df_copy.groupby(col)['Churn'].agg('mean').index.to_list()
 
-    df_group = df.groupby(col)['Churn'].mean()
+    df_group = df_copy.groupby(col)['Churn'].mean()
 
     # bar chart
     ax = df_group.plot.bar(x=labels, y=values, ylabel='Churn Rate')
