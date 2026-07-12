@@ -8,7 +8,7 @@ from scipy import stats
 def chi_square_tests(df):
     """
     df: pandas DataFrame with Churn and categorical columns
-    Computes the Chi-square p-value to test the independence between each categorical feature and the target variable Churn, excluding Churn itself from the features tested.
+    Computes the Chi-square p-value to test the independence
     Returns a dictionary: {feature_name: p_value}
     """
     """
@@ -32,5 +32,5 @@ def chi_square_tests(df):
         contingency = pd.crosstab(df['Churn'], df[col])
         chi2, p, dof, expected = stats.chi2_contingency(contingency)
         chi_square[col] = float(p)
-    
+
     return chi_square
