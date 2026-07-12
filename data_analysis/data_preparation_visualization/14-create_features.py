@@ -14,6 +14,8 @@ def create_features(df):
         'No internet service' in df[col].values
         ]
     target_cols.append('YNInternet')
+    target_cols.append('MultipleLines')
+    target_cols.append('InternetService')
 
     # creating a help row for InternetServices
     df['YNInternet'] = df['InternetService']
