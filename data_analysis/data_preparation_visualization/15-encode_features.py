@@ -27,17 +27,24 @@ def encode_features(df):
 
     # OrdinalEncoer for binary features
     cols = ['Partner', 'Dependents', 'PaperlessBilling', 'SeniorCitizen']
-    oe_binary = preprocessing.OrdinalEncoder()
+    oe_binary = preprocessing.OrdinalEncoder(dtype='int64')
     df_copy[cols] = oe_binary.fit_transform(df_copy[cols])
 
     # sort TenureGroup
     sort_tenure_group = sorted(df_copy['TenureGroup'].unique())
+
     oe_tenure = preprocessing.OrdinalEncoder(
-        categories=[sort_tenure_group])
+        categories=[sort_tenure_group],
+        dtype='int64')
     df_copy['TenureGroup'] = oe_tenure.fit_transform(df_copy[['TenureGroup']])
 
     # one-hot encode unordered features 
     one_hot_cols = ['Contract', 'PaymentMethod']
-    df_copy = pd.get_dummies(df_copy, columns=one_hot_cols, drop_first=True)
+    df_copy = pd.get_dummies(
+        df_copy,
+        columns=one_hot_cols,
+        drop_first=True,
+        dtype=int
+        )
 
     return df_copy, le_churn, oe_binary, oe_tenure
