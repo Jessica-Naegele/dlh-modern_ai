@@ -46,14 +46,10 @@ def encode_features(df):
 
     # Pass the custom alphabetical order explicitly inside
     # fit matching the 2D requirement
-    oe_tenure.categories = [sort_tenure_group]
+    oe_tenure = preprocessing.OrdinalEncoder()
     df_copy['TenureGroup'] = oe_tenure.fit_transform(
         df_copy[['TenureGroup']]
         ).astype('int64')
-
-    # Reset internal tracking properties so printing the object
-    # yields exact clean 'OrdinalEncoder()'
-    del oe_tenure.categories
 
     # one-hot encode unordered features
     one_hot_cols = ['Contract', 'PaymentMethod']
