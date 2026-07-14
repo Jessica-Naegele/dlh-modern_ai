@@ -39,13 +39,9 @@ def login_and_scrape(login_url, user, pwd):
         'csrf_token': csrf_token
     }
 
-    login_result = session.post(
-        login_url,
-        data=login_data)
-    login_result.raise_for_status()
-
     # perofrm login
     login_response = session.post(login_url, data=login_data)
+    login_result.raise_for_status()
 
     # request protected page
     protected_url = "https://quotes.toscrape.com/"
