@@ -4,7 +4,7 @@
 import requests
 
 
-def fetch_html(url, headers = None, timeout = 10):
+def fetch_html(url, headers=None, timeout=10):
     """function fetching a webpage and returning its HTML as text
     url is the page to retrieve
     headers is an optional dict of HTTP headers (e.g. {"User-Agent": "…”})
