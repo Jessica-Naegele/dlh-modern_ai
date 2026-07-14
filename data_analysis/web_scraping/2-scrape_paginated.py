@@ -33,4 +33,3 @@ def scrape_paginated(base_url):
         # print(f"current_url:  {current_url}")  # helper
         text += scrape_paginated(current_url)
     return text
-
