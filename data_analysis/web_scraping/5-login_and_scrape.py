@@ -41,7 +41,7 @@ def login_and_scrape(login_url, user, pwd):
 
     # perofrm login
     login_response = session.post(login_url, data=login_data)
-    login_result.raise_for_status()
+    login_response.raise_for_status()
 
     # request protected page
     protected_url = "https://quotes.toscrape.com/"
