@@ -30,11 +30,7 @@ def login_and_scrape(login_url, user, pwd):
         "input", attrs={
             "name": "csrf_token", "type": "hidden"
             })
-    try:
-        csrf_token = token_element["value"]
-    except TypeError:
-        raise "'NoneType' object is not subscriptable"
-    # print(f"csrf: {csrf_token}")
+    csrf_token = token_element["value"]
 
     # Post Login
     login_data = {
@@ -42,6 +38,11 @@ def login_and_scrape(login_url, user, pwd):
         'password': pwd,
         'csrf_token': csrf_token
     }
+
+    login_result = session.post(
+        login_url,
+        data=login_data)
+    login_result.raise_for_status()
 
     # perofrm login
     login_response = session.post(login_url, data=login_data)
