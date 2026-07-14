@@ -32,8 +32,7 @@ def scrape_via_api(base_url):
     i = 0
     while data['has_next']:
         i += 1
-        page_number += i
-        url = f"{base_url}/api/quotes?page={page_number}"
+        url = f"{base_url}/api/quotes?page={i}"
         t = fetch_html(url)
         data = json.loads(t)
 
