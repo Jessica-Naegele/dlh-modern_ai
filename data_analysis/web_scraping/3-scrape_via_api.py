@@ -26,11 +26,8 @@ def scrape_via_api(base_url):
     # fetch data
     t = fetch_html(url)
     # print(f"text: {text}") # helper
-
-
     data = json.loads(t)
-    # print(data)
-    
+
     # calculate how often to move on
     i = 0
     while data['has_next']:
@@ -38,12 +35,12 @@ def scrape_via_api(base_url):
         page_number += i
         url = f"{base_url}/api/quotes?page={page_number}"
         t = fetch_html(url)
-        data = json.loads(t)   
+        data = json.loads(t)
 
         # prepare data like regquested
         for quote in data["quotes"]:
             # print(f"quote: {quote}")
-            
+
             cur_dict = {
                 "text": quote['text'],
                 "author": quote['author']['name'],
