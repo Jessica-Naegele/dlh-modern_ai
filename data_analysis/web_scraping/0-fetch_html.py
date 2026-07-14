@@ -10,7 +10,6 @@ def fetch_html(url, headers=None, timeout=10):
     headers is an optional dict of HTTP headers (e.g. {"User-Agent": "…”})
     timeout is the number of seconds to wait before aborting
     Must raise an exception on any HTTP status ≥400
-    Only import: import requests
     Returns: the full HTML of the response as a string
     """
     response = requests.get(url, headers=headers, timeout=timeout)
