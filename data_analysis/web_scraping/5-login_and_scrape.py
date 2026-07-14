@@ -8,9 +8,10 @@ from bs4 import BeautifulSoup
 def login_and_scrape(login_url, user, pwd):
     """TASK 5
     login_url is the login page
-    GET the login form and extract the CSRF token from <input name="csrf_token">
+    GET the login form and extract the CSRF token from
     POST credential fields (username, password, csrf_token) back to login_url
-    After successful login, GET the protected quotes page (https://quotes.toscrape.com/)
+    After successful login, GET the protected quotes page
+    (https://quotes.toscrape.com/)
     Use BeautifulSoup to parse each <div class="quote"> and extract:
     "text": the quote text
     "author": the author’s name
@@ -23,10 +24,12 @@ def login_and_scrape(login_url, user, pwd):
     response = requests.get(login_url)
     response.raise_for_status()
 
-    # <input type="hidden" name="csrf_token" value="jJgOuzpBfEvoliCsQUTSInWXbRkMDeyYarKdxGFPHhZwALtcNVqm"/>
     soup = BeautifulSoup(response.text, "html.parser")
     # print(f"soup: {soup}")
-    token_element = soup.find("input", attrs={"name": "csrf_token", "type": "hidden"})
+    token_element = soup.find(
+        "input", attrs={
+            "name": "csrf_token", "type": "hidden"
+            })
     csrf_token = token_element["value"]
     # print(f"csrf: {csrf_token}")
 
@@ -63,7 +66,3 @@ def login_and_scrape(login_url, user, pwd):
         res.append(res_dict)
 
     return res
-
-
-
-
