@@ -19,18 +19,20 @@ def scrape_basic(url):
     # parse the page
     soup = BeautifulSoup(page, "html.parser")
     res = []
-    
+
     # find correct class = quote
     quotes = soup.find_all('div', class_='quote')
 
     for quote in quotes:
-        
         res_dict = {
-            "text" : quote.find('span', class_='text').text,  # span class="text"
-            "author" : quote.find('small', class_='author').text,  # <small class="author
-            "tags" : [tag.text for tag in quote.find_all('a', class_='tag')]  # div class="tags"
+            "text": quote.find('span', class_='text').text,
+            # span class="text"
+            "author": quote.find('small', class_='author').text,
+            # <small class="author
+            "tags": [tag.text for tag in quote.find_all('a', class_='tag')]
+            # div class="tags"
         }
 
         res.append(res_dict)
-    
+
     return res
