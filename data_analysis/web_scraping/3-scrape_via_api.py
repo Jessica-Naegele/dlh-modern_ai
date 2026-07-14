@@ -16,7 +16,7 @@ def scrape_via_api(base_url):
     "author": the author’s name
     "tags": the list of tags
     """
-    # import data
+    # get data
     quotes = []
     page_number = 1
 
