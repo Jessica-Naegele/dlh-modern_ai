@@ -21,7 +21,7 @@ def login_and_scrape(login_url, user, pwd):
     session = requests.Session()
 
     # get login form and extract the CSRF token
-    response = requests.get(login_url)
+    response = session.get(login_url)
     response.raise_for_status()
 
     soup = BeautifulSoup(response.text, "html.parser")
@@ -47,7 +47,7 @@ def login_and_scrape(login_url, user, pwd):
     protected_url = "https://quotes.toscrape.com/"
     authenticated_response = session.get(protected_url)
 
-    soup = BeautifulSoup(authenticated_response.content, "html.parser")
+    soup = BeautifulSoup(authenticated_response.text, "html.parser")
     res = []
 
     # find correct class = quote
