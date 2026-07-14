@@ -12,11 +12,14 @@ def extract_jsonld(url):
     """TASK 4
     url is the Quotes List endpoint (e.g. "https://quotes.toscrape.com/")
     Use fetch_html() to fetch the HTML
-    Locate all <script type="application/ld+json"> blocks and parse each with json.loads()
+    Locate all <script type="application/ld+json">
+    blocks and parse each with json.loads()
     From each JSON‑LD object of "@type": "Quote", extract:
     "text": the quote text (.get("text"))
-    "author": the author’s name (.get("author", {}).get("name"))
-    "tags": keywords, (p.s. split into a list if provided as a comma-separated string)
+    "author": the author’s name (.get("author",
+    {}).get("name"))
+    "tags": keywords, (p.s. split into a list if provided as a
+    comma-separated string)
     """
     # fetch the data
     page = fetch_html(url)
@@ -36,5 +39,5 @@ def extract_jsonld(url):
             "tags": json_data.get('keywords')
         }
         t.append(cur_quote)
-    
+
     return t
