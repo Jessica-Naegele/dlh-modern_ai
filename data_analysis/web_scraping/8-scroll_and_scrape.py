@@ -1,36 +1,26 @@
 #!/usr/bin/env python3
-"""function that scrolls and extracts products"""
+"""Function that scrolls and extracts products from an infinite-scroll page"""
 
 import time
 from selenium import webdriver
 
 
 def scroll_and_scrape(url, scroll_pause=2.0):
-    """function scrolling and extracting all products
-    - open infinite scroll page in headless Chrome
-    - scroll to the bottom repeatedly, waiting scroll_pause
-    until page height stops increasing
-    - find every div.thumbnail product card and extracts
-      - title: < a class="title">
-      - price (<h4 class = price")
-      - description <p class=description>
-      - rating <count number of <p class="ws-icon ws-icon-star"> under .ratings
-
-      - skip duplicate products by tracking (title, price) pairs
-      return a list of unique products dicts
-      - use exectute script for scrolling
+    """Opens an infinite scroll page in headless Chrome, scrolls to the bottom,
+    extracts unique product cards, and returns them in a list of dicts.
     """
-    # set up browser and browser options
+    # Set up optimized headless browser options
     browser_options = webdriver.ChromeOptions()
-    browser_options.add_argument("--headless")
+    browser_options.add_argument("--headless=new")
+    # Modern headless mode (faster & more stable)
     browser_options.add_argument("--window-size=1920,1080")
     browser_options.add_argument("--no-sandbox")
     browser_options.add_argument("--disable-dev-shm-usage")
+    browser_options.add_argument("--disable-gpu")
+    # Speeds up startup in headless/Docker environments
 
-    # access website
     driver = webdriver.Chrome(options=browser_options)
 
-    # store list of products
     scrape_products = []
     seen_identifiers = set()
 
@@ -38,57 +28,63 @@ def scroll_and_scrape(url, scroll_pause=2.0):
         driver.get(url)
         time.sleep(scroll_pause)
 
-        last_height = driver.execute_script(
-            "return document.body.scrollHeight"
-            )
-        while True:
-            # scroll to the bottom to trigger next batch
+        # --- PHASE 1: SCROLL UNTIL NO NEW PRODUCTS LOAD ---
+        last_product_count = 0
+        scroll_attempts = 0
+        max_scroll_attempts = 25  # Safety cap to prevent sandbox timeouts
+
+        while scroll_attempts < max_scroll_attempts:
             driver.execute_script(
                 "window.scrollTo(0, document.body.scrollHeight);"
                 )
             time.sleep(scroll_pause)
 
-            # continue while
-            new_height = driver.execute_script(
-                "return document.body.scrollHeight"
-                )
-            if new_height == last_height:
-                break  # Bottom reaced
-            last_height = new_height
+            # Check how many cards have loaded so far
+            current_cards = driver.find_elements("css selector", ".thumbnail")
+            current_product_count = len(current_cards)
 
-        # extract the info all in once
+            # If the count didn't increase, we have loaded all items
+            if (
+                current_product_count == last_product_count
+                and current_product_count > 0
+            ):
+                break
+
+            last_product_count = current_product_count
+            scroll_attempts += 1
+
+        # --- PHASE 2: EXTRACT UNIQUE PRODUCTS ---
         product_cards = driver.find_elements("css selector", ".thumbnail")
 
         for card in product_cards:
-            # Title: find the <a> tag with class "title"
-            title_value = card.find_element("css selector", "a.title")
-            title = title_value.get_attribute("title")
-            # price <h4 class="price">
+            # Title
+            title_element = card.find_element("css selector", "a.title")
+            title = title_element.get_attribute("title")
+
+            # Price
             price = card.find_element("css selector", "h4.price").text
-            # description <p class="description">
+
+            # Description
             description = card.find_element(
                 "css selector", "p.description"
                 ).text
-            # rating: element under class ".ratings"
-            # needs CSS selector
-            rating_element = card.find_elements(
-                "css selector", ".ratings .ws-icon-star"
-                )
-            rating = len(rating_element)
 
-            # store data
+            # Rating
+            rating_elements = card.find_elements(
+                "css selector", ".ratings .ws-icon-star"
+            )
+            rating = len(rating_elements)
+
+            # Track unique items strictly by (title, price) pairs
             product_identifier = (title, price)
             if product_identifier not in seen_identifiers:
                 seen_identifiers.add(product_identifier)
-
-                scrape_products.append(
-                    {
-                        "title": title,
-                        "price": price,
-                        "description": description,
-                        "rating": rating
-                    }
-                )
+                scrape_products.append({
+                    "title": title,
+                    "price": price,
+                    "description": description,
+                    "rating": rating
+                })
 
     finally:
         driver.quit()
