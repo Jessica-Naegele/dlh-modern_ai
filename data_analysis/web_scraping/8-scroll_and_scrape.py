@@ -8,7 +8,7 @@ from selenium import webdriver
 def scroll_and_scrape(url, scroll_pause=2.0):
     """function scrolling and extracting all products
     - open infinite scroll page in headless Chrome
-    - scroll to the bottom repeatedly, waiting scroll_pause 
+    - scroll to the bottom repeatedly, waiting scroll_pause
     until page height stops increasing
     - find every div.thumbnail product card and extracts
       - title: < a class="title">
@@ -18,9 +18,9 @@ def scroll_and_scrape(url, scroll_pause=2.0):
 
       - skip duplicate products by tracking (title, price) pairs
       return a list of unique products dicts
-      - use exectute script for scrolling    
+      - use exectute script for scrolling
     """
-     # set up browser and browser options
+    # set up browser and browser options
     browser_options = webdriver.ChromeOptions()
     browser_options.add_argument("--headless")
     browser_options.add_argument("--window-size=1920,1080")
@@ -29,7 +29,6 @@ def scroll_and_scrape(url, scroll_pause=2.0):
 
     # access website
     driver = webdriver.Chrome(options=browser_options)
-  
 
     # store list of products
     scrape_products = []
@@ -38,8 +37,10 @@ def scroll_and_scrape(url, scroll_pause=2.0):
     try:
         driver.get(url)
         time.sleep(scroll_pause)
-    
-        last_height = driver.execute_script("return document.body.scrollHeight")
+
+        last_height = driver.execute_script(
+            "return document.body.scrollHeight"
+            )
         while True:
             # scroll to the bottom to trigger next batch
             driver.execute_script(
@@ -54,7 +55,7 @@ def scroll_and_scrape(url, scroll_pause=2.0):
             if new_height == last_height:
                 break  # Bottom reaced
             last_height = new_height
-        
+
         # extract the info all in once
         product_cards = driver.find_elements("css selector", ".thumbnail")
 
@@ -70,24 +71,25 @@ def scroll_and_scrape(url, scroll_pause=2.0):
                 ).text
             # rating: element under class ".ratings"
             # needs CSS selector
-            rating_element = card.find_elements("css selector",
-                                            ".ratings .ws-icon-star")
+            rating_element = card.find_elements(
+                "css selector", ".ratings .ws-icon-star"
+                )
             rating = len(rating_element)
 
             # store data
             product_identifier = (title, price)
             if product_identifier not in seen_identifiers:
                 seen_identifiers.add(product_identifier)
-                            
+
                 scrape_products.append(
                     {
-                    "title": title,
-                    "price": price,
-                    "description": description,
-                    "rating": rating
+                        "title": title,
+                        "price": price,
+                        "description": description,
+                        "rating": rating
                     }
                 )
-        
+
     finally:
         driver.quit()
 
