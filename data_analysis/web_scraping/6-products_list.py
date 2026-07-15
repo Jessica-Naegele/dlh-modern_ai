@@ -20,7 +20,7 @@ def scrape_products(url):
     """
     # define options
     browser_options = webdriver.ChromeOptions()
-    browser_options.headless = True
+    browser_options.add_argument("--headless")
     # define 1920 1080 window
     browser_options.add_argument("--window-size=1920,1080")
     browser_options.add_argument("--no-sandbox")
@@ -35,6 +35,7 @@ def scrape_products(url):
 
     # print(driver.page_source) # helfer
     scrape_products = []
+    # unique products by title
     try:
         # find all product cards on the page
         product_cards = driver.find_elements("class name", "thumbnail")
@@ -57,12 +58,16 @@ def scrape_products(url):
             rating = int(rating_value) if rating_value else 0
 
             # store data
-            scrape_products.append({
+            product_entry = {
                 "title": title,
                 "price": price,
                 "description": description,
                 "rating": rating
-            })
+            }
+
+            # check for duplicates and only add unique
+            if product_entry not in scrape_products:
+                scrape_products.append(product_entry)
 
     finally:
         driver.quit()
