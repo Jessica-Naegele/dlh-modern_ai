@@ -6,7 +6,7 @@ import time
 from selenium import webdriver
 
 
-def scrape_products_list(url):
+def scrape_products(url):
     """
     result: lists of product dictionaroes
     "title": the product’s name (from the title attribute of the
