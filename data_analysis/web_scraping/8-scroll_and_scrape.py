@@ -14,6 +14,9 @@ def scroll_and_scrape(url, scroll_pause=2.0):
     options.add_argument("--no-sandbox")
     options.add_argument("--disable-dev-shm-usage")
     options.add_argument("--disable-gpu")
+    # Block images from loading to speed up page rendering
+    prefs = {"profile.managed_default_content_settings.images": 2}
+    options.add_experimental_option("prefs", prefs)
 
     driver = webdriver.Chrome(options=options)
     driver.set_page_load_timeout(15)
@@ -23,7 +26,6 @@ def scroll_and_scrape(url, scroll_pause=2.0):
 
     try:
         driver.get(url)
-        time.sleep(scroll_pause)
 
         # --- PHASE 1: ULTRA-FAST HEIGHT-BASED SCROLLING ---
         last_height = driver.execute_script(
@@ -34,7 +36,16 @@ def scroll_and_scrape(url, scroll_pause=2.0):
             driver.execute_script(
                 "window.scrollTo(0, document.body.scrollHeight);"
             )
-            time.sleep(scroll_pause)
+            # --- ACTIVE WAITING REPLACEMENT
+            start_time = time.time()
+            while time.time() - start_time < scroll_pause:
+                new_height = driver.execute_script(
+                    "return document.body.scrollHeight"
+                )
+                # If the height has increased, new products
+                if new_height > last_height:
+                    break
+                time.sleep(0.1)
 
             new_height = driver.execute_script(
                 "return document.body.scrollHeight"
