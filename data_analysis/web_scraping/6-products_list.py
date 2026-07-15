@@ -36,7 +36,6 @@ def scrape_products_list(url):
     browser_options.add_argument("--no-sandbox")
     # prevents memory crashes
     browser_options.add_argument("--disable-dev-shm-usage")
-    
 
     # open a driver
     driver = webdriver.Chrome(options=browser_options)
@@ -44,18 +43,16 @@ def scrape_products_list(url):
     time.sleep(5)
     # how to treat cookies
 
-
     # print(driver.page_source) # helfer
-    
     products = []
     try:
         # find all product cards on the page
         product_cards = driver.find_elements("class name", "thumbnail")
 
-        #print(product_cards)
+        # print(product_cards)
         # need to loop through one by one
         for card in product_cards:
-            # Title: find the <a> tag with class "title" and get its "tittle attribute"
+            # Title: find the <a> tag with class "title" and get its attribute
             title_element = card.find_element("class name", "title")
             title = title_element.get_attribute("title")
             # price <h4 class="price">
@@ -64,12 +61,13 @@ def scrape_products_list(url):
             description = card.find_element("class name", "description").text
             # rating: element under class ".ratings" & data-rating attribute
             # needs CSS selector
-            rating_element = card.find_element("css selector", ".ratings p[data-rating]")
+            rating_element = card.find_element("css selector",
+                                               ".ratings p[data-rating]")
             rating_value = rating_element.get_attribute("data-rating")
             rating = int(rating_value) if rating_value else 0
 
             # store data
-            products.append( {
+            products.append({
                 "title": title,
                 "price": price,
                 "description": description,
@@ -79,12 +77,13 @@ def scrape_products_list(url):
     finally:
         driver.quit()
 
-
-
         # div class="product-wrapper card-body">
-        # <a href="/test-sites/e-commerce/static/product/33" class="title" title="ThinkPad T540p" itemprop="name"> ThinkPad T540p
-        #  <p class="description card-text" itemprop="description">15.6", Core i5-4200M, 4GB, 500GB, Win7 Pro 64bit</p>
-        #   <h4 class="price float-end card-title pull-right" itemprop="offers" itemscope="" itemtype="https://schema.org/Offer">
+        # <a href="/test-sites/e-commerce/static/product/33"
+        # class="title" title="ThinkPad T540p" itemprop="name"> ThinkPad T540p
+        #  <p class="description card-text" itemprop="description">15.6",
+        # Core i5-4200M, 4GB, 500GB, Win7 Pro 64bit</p>
+        #   <h4 class="price float-end card-title pull-right" itemprop="offers"
+        # itemscope="" itemtype="https://schema.org/Offer">
         # <span itemprop="price">$739.99</span>
         # <meta itemprop="priceCurrency" content="USD">
         # print(product) # helper
