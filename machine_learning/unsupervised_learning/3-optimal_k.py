@@ -30,7 +30,7 @@ def optimal_k(X, max_clusters, random_state):
     silhouette_score = []
     for i in range(2, max_clusters+1):
         k.append(i)
-        kmeans = K_Means(X, i, random_state+1)
+        kmeans = K_Means(X, i, random_state)
         inertias.append(kmeans.inertia_)
         silhouette_score.append(
             metrics.silhouette_score(
