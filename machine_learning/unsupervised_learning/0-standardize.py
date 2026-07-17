@@ -15,12 +15,10 @@ def Standardize(X):
      --> test for negative cases
 
      return:
-     - numpy.ndarray = standardized version of input data 
+     - numpy.ndarray = standardized version of input data
      - same shape as X
-    
     """
     scaler = preprocessing.StandardScaler()
     standardized_data = scaler.fit_transform(X)
 
     return standardized_data
-
