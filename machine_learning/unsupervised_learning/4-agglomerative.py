@@ -9,7 +9,9 @@ from sklearn import metrics
 Apply_PCA = __import__('1-pca').Apply_PCA
 
 
-def Agglomerative_Clustering(X, n_clusters, random_state, n_components, use_pca_data=True):
+def Agglomerative_Clustering(
+        X, n_clusters, random_state, n_components, use_pca_data=True
+        ):
     """
     function performing agglomerative hierarchical clustering
     3 Tasks:
@@ -34,14 +36,18 @@ def Agglomerative_Clustering(X, n_clusters, random_state, n_components, use_pca_
     # dimensionality reduction
     if use_pca_data:
         pca = Apply_PCA(X, n_components, random_state)
+        pca = pca[0]
     else:
         pca = X
-    
+
     # Clustering
     model = cluster.AgglomerativeClustering(n_clusters)
     y_means = model.fit_predict(pca)
 
     # silhouette
-    silhouette = metrics.silhouette_score(pca, y_means)
+    if n_clusters == 1:
+        silhouette = None
+    else:
+        silhouette = metrics.silhouette_score(pca, y_means)
 
-    return y_means, pca, silhouette
+    return model, pca, silhouette
