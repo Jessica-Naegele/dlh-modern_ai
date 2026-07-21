@@ -17,7 +17,9 @@ def draw(clf, feature_names, class_names):
     - class_names: list of target class names
     """
 
-    r = tree.export_text(clf, feature_names=feature_names, class_names=class_names)
+    r = tree.export_text(
+        clf, feature_names=feature_names, class_names=class_names
+        )
     print(r)
 
     return None
