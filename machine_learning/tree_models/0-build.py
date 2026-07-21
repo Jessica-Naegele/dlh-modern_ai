@@ -28,5 +28,5 @@ def build_decision_tree(min_samples_leaf, min_samples_split, random_state):
         min_samples_leaf=min_samples_leaf,
         random_state=random_state
         )
-    
+
     return model
