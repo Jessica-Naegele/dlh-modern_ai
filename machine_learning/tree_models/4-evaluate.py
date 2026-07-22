@@ -23,6 +23,9 @@ def evaluate(true_labels, predicted_labels, class_names):
     - f1-score
     """
 
-    report = metrics.classification_report(y_true= true_labels, y_pred= predicted_labels,target_names=class_names )
+    report = metrics.classification_report(
+        y_true=true_labels, y_pred=predicted_labels,
+        target_names=class_names
+        )
 
     return report
