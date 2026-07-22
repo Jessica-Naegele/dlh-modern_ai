@@ -10,15 +10,16 @@ train_tree = __import__('1-train').train_tree
 
 def prune_and_evaluate_trees(
         X_train, y_train, X_test, y_test, ccp_alphas, random_state,
-         min_samples_leaf, min_samples_split
-         ):
+        min_samples_leaf, min_samples_split
+        ):
     """
-    function training several decision tree classifiersover cost-complexity pruning
+    function training several decision tree classifiersover
+    cost-complexity pruning
 
     args:
     - X_train, y_train: Training data and labels
     -X_test, y_test: Testing data and labels
-    -ccp_alphas: nparray of pruning alpha values 
+    -ccp_alphas: nparray of pruning alpha values
     -random_state: Integer seed for reproducibility.
     -min_samples_leaf: (int)
     -min_samples_split: (int)
@@ -33,8 +34,6 @@ def prune_and_evaluate_trees(
     train_score = []
     test_score = []
     cfl_l = []
-    
-    
 
     for i in ccp_alphas:
         cfl = tree.DecisionTreeClassifier(
@@ -50,5 +49,3 @@ def prune_and_evaluate_trees(
         test_score.append(cfl_train.score(X_test, y_test))
 
     return cfl_l, train_score, test_score
-
-
