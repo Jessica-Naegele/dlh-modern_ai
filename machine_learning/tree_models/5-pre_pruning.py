@@ -17,7 +17,7 @@ def prepruning(X, y, clf):
     - max_depth: int [2,  5)
     - min_samples_leaf: int [2,  5)
     - min_samples_split: int [2,  5)
-    
+
     args:
     - X: input features
     - y: Target labels
@@ -33,8 +33,10 @@ def prepruning(X, y, clf):
         "min_samples_leaf": range(2, 5),
         "min_samples_split": range(2, 5)
     }
-    grid = model_selection.GridSearchCV(estimator=clf, param_grid=parameters, refit=True)
-    
+    grid = model_selection.GridSearchCV(
+        estimator=clf, param_grid=parameters, refit=True
+        )
+
     grid.fit(X, y)
 
     return grid.best_params_
