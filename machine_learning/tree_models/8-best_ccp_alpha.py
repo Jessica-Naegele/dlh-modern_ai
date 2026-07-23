@@ -10,7 +10,7 @@ def get_best_alpha(clfs, train_scores, test_scores, ccp_alphas):
     """
     selects best pruning value ccp_alpha for a set of trees
     - highest test accuracy
-    - if same test accuracy --> smallest difference btw 
+    - if same test accuracy --> smallest difference btw
     training and test accuracy
     - if another tie: largest ccp_alpha
 
@@ -22,7 +22,7 @@ def get_best_alpha(clfs, train_scores, test_scores, ccp_alphas):
 
     return:
     - best alpha
-    - best clf    
+    - best clf
     """
 
     acc = 0
@@ -38,7 +38,10 @@ def get_best_alpha(clfs, train_scores, test_scores, ccp_alphas):
 
     if count > 1:
         # print("in if count")
-        subset = [(index, score) for (index, score) in enumerate(test_scores) if score == acc]
+        subset = [
+            (index, score) for (index, score)
+            in enumerate(test_scores) if score == acc
+            ]
         # print(f"subset {subset}")
         # print(f"subset[0][0] {subset[0][0]}")
         dif = []
@@ -57,5 +60,5 @@ def get_best_alpha(clfs, train_scores, test_scores, ccp_alphas):
                     it = k[0]
                     alpha = ccp_alphas[k[0]]
                     acc = k[1]
-        
+
     return ccp_alphas[it], clfs[it]
