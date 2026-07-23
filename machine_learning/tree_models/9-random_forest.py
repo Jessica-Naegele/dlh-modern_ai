@@ -15,9 +15,11 @@ def random_forest(n_estimators, random_state):
     - n_estimators: # of trees in forest
     - random_state
 
-    return: model    
+    return: model
     """
 
-    rf = ensemble.RandomForestClassifier(n_estimators=n_estimators, random_state=random_state)
+    rf = ensemble.RandomForestClassifier(
+        n_estimators=n_estimators, random_state=random_state
+        )
 
     return rf
