@@ -25,7 +25,7 @@ def compare_boosting_classifiers(name, n_estimators, random_state):
     - random state int
     - n_estimators int
 
-    return: untrained instance    
+    return: untrained instance
     """
 
     classifier = ['adaboost', 'gradientboosting', 'xgboost', 'lightgbm']
@@ -34,12 +34,21 @@ def compare_boosting_classifiers(name, n_estimators, random_state):
         raise ValueError(f"Unknown model name '{name}'")
 
     if name == 'adaboost':
-        boost = ensemble.AdaBoostClassifier(n_estimators=n_estimators, random_state=random_state)
+        boost = ensemble.AdaBoostClassifier(
+            n_estimators=n_estimators, random_state=random_state
+            )
     if name == 'gradientboosting':
-        boost = ensemble.GradientBoostingClassifier(n_estimators=n_estimators, random_state=random_state)
+        boost = ensemble.GradientBoostingClassifier(
+            n_estimators=n_estimators, random_state=random_state
+            )
     if name == 'xgboost':
-        boost = xgb.XGBClassifier(n_estimators=n_estimators, random_state=random_state, objective='multi:softmax')
+        boost = xgb.XGBClassifier(
+            n_estimators=n_estimators, random_state=random_state
+            )
     if name == 'lightgbm':
-        boost = lgb.LGBMClassifier(n_estimators=n_estimators, random_state=random_state, verbose=-1)
+        boost = lgb.LGBMClassifier(
+            n_estimators=n_estimators, random_state=random_state,
+            verbose=-1
+            )
 
     return boost
