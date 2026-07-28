@@ -9,14 +9,14 @@ from sklearn import linear_model
 
 def ridge_regression(random_state):
     """
-    Ridge Regresion - extends ordinary linear regression by adding
+    Ridge Regresion - extends ordinary linear regression
     L2 regularization, which helps stabilize the model
     by shrinking large coefficients
 
     args:
     - random stage: int - random seed for reproducibility
 
-    return: 
+    return:
     - model: untrained Ridge
     """
 
