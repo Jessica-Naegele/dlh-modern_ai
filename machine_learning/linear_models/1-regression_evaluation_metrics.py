@@ -15,7 +15,7 @@ def evaluation_metrics_for_regression(y_true, y_pred):
     args:
     - y_true: np array: true target values
     - y_pred: np - containing predited values
-    
+
     result:
     - tuple (mse, rmse, mae, r2)
     - mse: Mean Squared Error
