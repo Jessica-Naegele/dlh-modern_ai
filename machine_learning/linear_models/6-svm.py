@@ -16,7 +16,7 @@ def get_SVM_model(name, random_state):
         - poly
         - rbf
     - random_state int
-    
+
     return:
     - untrained SVC
     """
