@@ -10,7 +10,7 @@ from tensorflow import keras
 def compile_model(model, learning_rate=0.01):
     """
     model for training having:
-    - Optimizer: stochastic gradient descent 
+    - Optimizer: stochastic gradient descent
     - Loss function: binary cross-entropy
     - Classification performance: accuracy
 
@@ -21,9 +21,9 @@ def compile_model(model, learning_rate=0.01):
     return: None
     """
     model.compile(
-        optimizer=keras.optimizers.SGD(learning_rate=learning_rate) ,
+        optimizer=keras.optimizers.SGD(learning_rate=learning_rate),
         loss=keras.losses.BinaryCrossentropy(),
-        metrics = [keras.metrics.Accuracy()]
+        metrics=[keras.metrics.Accuracy()]
     )
 
     return None
