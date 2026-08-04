@@ -18,13 +18,12 @@ def build_model(input_dim, neurons_h):
     - input_dim: # input features
     - neurons_h: # neurons in hidden layer
 
-    return: 
+    return:
     - model
     """
-    input = keras.Input(shape = (input_dim,))
+    input = keras.Input(shape=(input_dim,))
     h = keras.layers.Dense(neurons_h, activation='sigmoid')(input)
     output = keras.layers.Dense(10, activation="softmax")(h)
     model = keras.Model(inputs=input, outputs=output)
 
     return model
-    
