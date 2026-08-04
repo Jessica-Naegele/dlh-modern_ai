@@ -22,8 +22,8 @@ def compile_model(model, learning_rate=0.01):
     """
     model.compile(
         optimizer=keras.optimizers.SGD(learning_rate=learning_rate),
-        loss=keras.losses.BinaryCrossentropy(),
-        metrics=[keras.metrics.Accuracy()]
+        loss='binary_crossentropy',
+        metrics=['accuracy']
     )
 
     return None
