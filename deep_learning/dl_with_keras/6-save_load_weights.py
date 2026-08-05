@@ -6,8 +6,6 @@ two functions:
 - load model weights
 """
 
-from tensorflow import keras
-
 
 def save_model_weights(model, filepath):
     """
