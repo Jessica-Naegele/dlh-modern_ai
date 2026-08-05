@@ -6,6 +6,8 @@
 - load model
 """
 
+from tensorflow import keras
+
 
 def save_model(model, filepath):
     """
