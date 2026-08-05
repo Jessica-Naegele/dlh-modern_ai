@@ -16,7 +16,7 @@ def save_model(model, filepath):
     - filepath: string including file path & file name
 
     return:
-    - NONE   
+    - NONE
     """
 
     model.save(filepath)
