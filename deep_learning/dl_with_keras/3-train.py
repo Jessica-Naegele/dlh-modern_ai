@@ -18,7 +18,7 @@ def train_model(model, X, Y, epochs, verbose=1):
     - epochs: # of training epochs
     - verbose: verbosity mode (0=silent, 1 = progress bar)
 
-    returns: 
+    returns:
     - None
     """
 
