@@ -4,8 +4,6 @@
 function training a model
 """
 
-from tensorflow import keras
-
 
 def train_model(model, X, Y, epochs, verbose=1):
     """
