@@ -20,6 +20,6 @@ def evaluate_model(model, X, Y, verbose=0):
     - accuracy: accurcy of model
     """
 
-    results = model.evaluate(X, Y, verbose=verbose)
+    loss, accuracy = model.evaluate(X, Y, verbose=verbose)
 
-    return results
+    return (loss, accuracy)
