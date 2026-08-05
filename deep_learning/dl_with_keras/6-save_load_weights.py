@@ -12,7 +12,7 @@ from tensorflow import keras
 def save_model_weights(model, filepath):
     """
     save only model weights
-    
+
     args:
     - model: trained model
     - filepath: string
@@ -23,7 +23,7 @@ def save_model_weights(model, filepath):
 
     model.save_weights(filepath)
 
-    return None 
+    return None
 
 
 def load_model_weights(model, filepath):
