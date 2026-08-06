@@ -23,7 +23,7 @@ def predict(model, X, verbose=0):
     - predictions: list of class labels and input data
     """
 
-    probabilities = model.predict(X, verbose)
+    probabilities = model.predict(X, verbose=verbose)
 
     # extract index with highest probability
     prediction = tf.argmax(probabilities, axis=1)
