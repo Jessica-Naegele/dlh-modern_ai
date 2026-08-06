@@ -14,7 +14,7 @@ def predict(model, X, verbose=0):
     args:
     - model: trained
     - X: input data with shape (# examples, features)
-    - verbose: 
+    - verbose:
        0 - silent
        1 - progres bar
        2 - one line per batch
@@ -23,6 +23,9 @@ def predict(model, X, verbose=0):
     - predictions: list of class labels and input data
     """
 
-    prediction = model.predict(X, verbose)
+    probabilities = model.predict(X, verbose)
+
+    # extract index with highest probability
+    prediction = tf.argmax(probabilities, axis=1)
 
     return prediction
