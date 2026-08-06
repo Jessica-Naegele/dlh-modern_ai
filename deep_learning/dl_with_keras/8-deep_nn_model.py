@@ -17,15 +17,15 @@ def build_deep_model(input_dim, hidden_layers):
     - input_dim: # input features
     - hidden_layers: list of ints representing # of neurons for
       each hidden layer
-    
+
     returns:
-    - model    
+    - model
     """
 
     model = keras.Sequential()
 
     # Input Layer
-    model.add(keras.layers.Dense(shape=(input_dim,)))
+    model.add(keras.layers.Input(shape=(input_dim,)))
 
     # hidden layers
     for unit in hidden_layers:
