@@ -32,7 +32,7 @@ def train_with_gradient_descent_variant(
     """
     # optimizer
     optimizer = keras.optimizers.SGD(
-        learning_rate = learning_rate
+        learning_rate=learning_rate
     )
 
     # for batch size (short: bs)
