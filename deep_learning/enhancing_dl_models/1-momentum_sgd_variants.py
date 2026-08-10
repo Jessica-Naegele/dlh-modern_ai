@@ -30,7 +30,7 @@ def get_optimizer_SGD(name, lr, momentum=0.0, nesterov=False):
         nesterov = False
 
     optimizer = keras.optimizers.SGD(
-        learning_rate=learning_rate,
+        learning_rate=lr,
         momentum=momentum,
         nesterov=nesterov
     )
