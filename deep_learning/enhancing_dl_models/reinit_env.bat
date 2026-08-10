@@ -32,6 +32,7 @@ echo [4/4] Upgrading pip and installing TensorFlow...
 call .\.venv\Scripts\activate.bat
 python -m pip install --upgrade pip
 pip install "tensorflow>=2.16.0" "numpy<2.0.0"
+pip install pandas
 
 echo.
 echo ==============================================================================
