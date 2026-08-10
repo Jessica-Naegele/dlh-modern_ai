@@ -28,7 +28,7 @@ def get_optimizer_SGD(name, lr, momentum=0.0, nesterov=False):
         nesterov = False
     elif name == "SGD+Momentum":
         nesterov = False
-    
+
     optimizer = keras.optimizers.SGD(
         learning_rate=learning_rate,
         momentum=momentum,
