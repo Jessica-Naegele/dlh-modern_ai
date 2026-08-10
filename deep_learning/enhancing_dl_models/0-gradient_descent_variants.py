@@ -4,7 +4,7 @@
 function creating a descent optimizer with appropriate batch size
 """
 
-import keras
+from tensorflow import keras
 
 
 def train_with_gradient_descent_variant(
