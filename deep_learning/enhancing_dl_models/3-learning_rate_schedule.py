@@ -7,12 +7,18 @@ function returning a Keras SGD optimizer
 from tensorflow import keras
 
 
-def get_optimizer_SGD_with_schedule(schedule_type, initial_lr, decay_steps, decay_rate, momentum):
+def get_optimizer_SGD_with_schedule(
+        schedule_type,
+        initial_lr,
+        decay_steps,
+        decay_rate,
+        momentum
+        ):
     """
     returning SGD optimizer with momentum and learning rate schedule
 
     args:
-    - schedule_type: (str) 
+    - schedule_type: (str)
         - 'exponential'
         - 'inverse_time'
     - initial_lr: (float)
@@ -40,7 +46,7 @@ def get_optimizer_SGD_with_schedule(schedule_type, initial_lr, decay_steps, deca
             decay_rate=decay_rate,
             staircase=True
             )
-        
+
     optimizer = keras.optimizers.SGD(
         learning_rate=lr_schedule,
         momentum=momentum
