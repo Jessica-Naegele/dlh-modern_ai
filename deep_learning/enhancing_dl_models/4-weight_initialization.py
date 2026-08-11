@@ -22,23 +22,31 @@ def build_model_initializer_by_activation(input_dim, hidden_units, activation):
     returns:
     - model
     """
-    # 1. Select the weight initializer
+
+    # Step 1: Pick the right Initializer and Activation object
     if activation in ["sigmoid", "tanh"]:
         initializer = keras.initializers.GlorotUniform()
-    elif activation in ["relu", "leaky_relu"]:
+        act_func = activation
+    elif activation == "relu":
         initializer = keras.initializers.HeNormal()
+        act_func = activation
+    elif activation == "leaky_relu":
+        initializer = keras.initializers.HeNormal()
+        act_func = keras.layers.LeakyReLU()
 
-    # 2. Build using Functional API (guarantees len(model.layers) == 3)
+    # Step 2: Connect the layers using the Functional API
     inputs = keras.Input(shape=(input_dim,))
     hidden = keras.layers.Dense(
         units=hidden_units,
-        activation=activation,
+        activation=act_func,
         kernel_initializer=initializer,
     )(inputs)
     outputs = keras.layers.Dense(units=10, activation="softmax")(hidden)
 
+    # Step 3: Bundle into a Model object
     model = keras.Model(inputs=inputs, outputs=outputs)
 
+    # Step 4: Compile the model
     model.compile(
         optimizer="adam",
         loss="categorical_crossentropy",
