@@ -28,9 +28,17 @@ def build_model_initializer_by_activation(input_dim, hidden_units, activation):
 
     # hidden layers
     if activation == "sigmoid" or activation == "tanh":
-        model.add(keras.layers.Dense(units=hidden_units, kernel_initializer=keras.initializers.GlorotUniform(), activation=activation))
+        model.add(keras.layers.Dense(
+            units=hidden_units,
+            kernel_initializer=keras.initializers.GlorotUniform(),
+            activation=activation
+            ))
     elif activation == "relu" or activation == "leaky_relu":
-        model.add(keras.layers.Dense(units=hidden_units, kernel_initializer=keras.initializers.HeNormal(), activation=activation))
+        model.add(keras.layers.Dense(
+            units=hidden_units,
+            kernel_initializer=keras.initializers.HeNormal(),
+            activation=activation
+            ))
 
     # output layer
     model.add(keras.layers.Dense(units=10, activation="softmax"))
