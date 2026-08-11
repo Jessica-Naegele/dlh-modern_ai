@@ -22,23 +22,22 @@ def build_model_initializer_by_activation(input_dim, hidden_units, activation):
     returns:
     - model
     """
+    # 1. Select the weight initializer
     if activation in ["sigmoid", "tanh"]:
         initializer = keras.initializers.GlorotUniform()
     elif activation in ["relu", "leaky_relu"]:
         initializer = keras.initializers.HeNormal()
 
-    # Pass layers as a list into keras.Sequential()
-    model = keras.Sequential(
-        [
-            keras.layers.InputLayer(input_shape=(input_dim,)),
-            keras.layers.Dense(
-                units=hidden_units,
-                activation=activation,
-                kernel_initializer=initializer,
-            ),
-            keras.layers.Dense(units=10, activation="softmax"),
-        ]
-    )
+    # 2. Build using Functional API (guarantees len(model.layers) == 3)
+    inputs = keras.Input(shape=(input_dim,))
+    hidden = keras.layers.Dense(
+        units=hidden_units,
+        activation=activation,
+        kernel_initializer=initializer,
+    )(inputs)
+    outputs = keras.layers.Dense(units=10, activation="softmax")(hidden)
+
+    model = keras.Model(inputs=inputs, outputs=outputs)
 
     model.compile(
         optimizer="adam",
