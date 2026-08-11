@@ -22,30 +22,28 @@ def build_model_initializer_by_activation(input_dim, hidden_units, activation):
     returns:
     - model
     """
-    model = keras.Sequential()
-
-    # 1. Input configuration
-    model.add(keras.layers.InputLayer(input_shape=(input_dim,)))
-
-    # 2. Select initializers safely
-    act_str = str(activation).lower().replace("-", "_")
-
-    if "sigmoid" in act_str or "tanh" in act_str:
+    if activation in ["sigmoid", "tanh"]:
         initializer = keras.initializers.GlorotUniform()
-    else:
-        # Default to HeNormal for relu, leaky_relu, or any other activation
+    elif activation in ["relu", "leaky_relu"]:
         initializer = keras.initializers.HeNormal()
 
-    # 3. Add Hidden Layer
-    model.add(
-        keras.layers.Dense(
-            units=hidden_units,
-            activation=activation,
-            kernel_initializer=initializer,
-        )
+    # Pass layers as a list into keras.Sequential()
+    model = keras.Sequential(
+        [
+            keras.layers.InputLayer(input_shape=(input_dim,)),
+            keras.layers.Dense(
+                units=hidden_units,
+                activation=activation,
+                kernel_initializer=initializer,
+            ),
+            keras.layers.Dense(units=10, activation="softmax"),
+        ]
     )
 
-    # 4. Add Output Layer
-    model.add(keras.layers.Dense(units=10, activation="softmax"))
+    model.compile(
+        optimizer="adam",
+        loss="categorical_crossentropy",
+        metrics=["accuracy"],
+    )
 
     return model
