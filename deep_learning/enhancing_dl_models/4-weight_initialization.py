@@ -43,4 +43,11 @@ def build_model_initializer_by_activation(input_dim, hidden_units, activation):
     # output layer
     model.add(keras.layers.Dense(units=10, activation="softmax"))
 
+    # compile
+    model.compile(
+        optimizer="adam",
+        loss="categorical_crossentropy",
+        metrics=["accuracy"]
+        )
+
     return model
