@@ -24,7 +24,7 @@ def build_model_initializer_by_activation(input_dim, hidden_units, activation):
     """
     # initial layer
     model = keras.Sequential()
-    model.add(keras.layers.InputLayer(shape=(input_dim,)))
+    model.add(keras.layers.InputLayer(input_shape=(input_dim,)))
 
     # hidden layers
     if activation == "sigmoid" or activation == "tanh":
