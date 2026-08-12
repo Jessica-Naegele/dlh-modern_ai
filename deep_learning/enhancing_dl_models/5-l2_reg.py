@@ -7,7 +7,12 @@ function creating a model with L2 regularization
 from tensorflow import keras
 
 
-def build_model_with_L2_regularization(input_dim, hidden_units, n_layers, lambda_l2):
+def build_model_with_L2_regularization(
+        input_dim,
+        hidden_units,
+        n_layers,
+        lambda_l2
+        ):
     """
     - multiple hidden layers (defined by n)
         - dense layer
@@ -28,16 +33,16 @@ def build_model_with_L2_regularization(input_dim, hidden_units, n_layers, lambda
     # Step 1: Connect the layers using the Functional API
     inputs = keras.layers.Input(shape=(input_dim,))
     x = inputs
-        
+
     # Step 2: Loop hidden layers
-        
-    for units in range (0, n_layers):
+
+    for units in range(0, n_layers):
         x = keras.layers.Dense(
-        units = hidden_units,
-        activation = "relu",
-        kernel_regularizer=keras.regularizers.l2(lambda_l2)
-        )(x)
-        
+            units=hidden_units,
+            activation="relu",
+            kernel_regularizer=keras.regularizers.l2(lambda_l2)
+            )(x)
+
     # Step 3 Hidden layer
     outputs = keras.layers.Dense(units=10, activation="softmax")(x)
 
