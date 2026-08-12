@@ -7,7 +7,13 @@ function creating a model with dropout regularization
 from tensorflow import keras
 
 
-def build_model_with_dropout(input_dim, hidden_units, n_layers, dropout_rate_input, dropout_rate_hidden):
+def build_model_with_dropout(
+        input_dim,
+        hidden_units,
+        n_layers,
+        dropout_rate_input,
+        dropout_rate_hidden
+        ):
     """
     model with dropout regularization
     - input layer followed by a droupout layer
