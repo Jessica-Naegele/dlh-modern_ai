@@ -24,6 +24,10 @@ def get_early_stopping_callback(patience, monitor='val_loss', verbose=1):
     - configured early Stopping callback
     """
 
-    cb = keras.callbacks.EarlyStopping(monitor=monitor, patience=patience, verbose=verbose)
+    cb = keras.callbacks.EarlyStopping(
+        monitor=monitor,
+        patience=patience,
+        verbose=verbose
+        )
 
     return cb
