@@ -24,7 +24,7 @@ def build_model(hp):
     - Optimizer and Learning Rate
         - adam
         - learning_rate: (float) (1e-2 or 1e-3)
-    
+
     args:
     - an isntance of hyperparameters provided
 
@@ -34,7 +34,7 @@ def build_model(hp):
     # input layer
     model = keras.Sequential()
     model.add(keras.layers.Input(shape=(784,)))
-    
+
     # hidden layer
     'how to define 1-2 num_layers'
     for i in range(hp.Int('num_layers', min_value=1, max_value=2)):
@@ -42,7 +42,7 @@ def build_model(hp):
             units=hp.Int('units', min_value=4, max_value=12, step=4),
             activation=hp.Choice('activation', values=['relu', 'sigmoid'])
         ))
-    
+
     # output layer
     model.add(keras.layers.Dense(10, activation='softmax'))
 
