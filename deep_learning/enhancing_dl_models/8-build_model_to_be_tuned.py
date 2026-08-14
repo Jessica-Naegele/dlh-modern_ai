@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 """
 --- TASK 8 --- Build a Model to be Tuned
-
 This module defines the build_model function to construct and compile a Keras
 Sequential model for multi-class classification using hyperparameter search
 spaces provided by Keras Tuner.
