@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 """
---- TASK 8 ---
-multi-class classification with a model tuned via Keras tuner
+Builds a Keras model for multi-class classification tuned via Keras Tuner.
 """
 
 from tensorflow import keras
@@ -10,47 +9,36 @@ from keras_tuner import HyperParameters
 
 def build_model(hp):
     """
-    model for multi-class classification wih parameter tuning
+    Builds and compiles a Keras Sequential model for multi-class
+    classification.
 
-    tunable aspects:
-    - input layer (input vector of shape (784,))
-    - hidden layers (and config should be tunable)
-        - num_layers: # int (between 1-2)
-        - units: # int (number of neurons in hidden layer)
-        - activation: (str) relu or sigmoid
-    - output layer
-        - dense output layer with 10 units
-        - softmax
-    - Optimizer and Learning Rate
-        - adam
-        - learning_rate: (float) (1e-2 or 1e-3)
+    Args:
+        hp (HyperParameters): An instance of HyperParameters
+        provided by Keras Tuner to define the search space.
 
-    args:
-    - an isntance of hyperparameters provided
-
-    returns:
-    - compiled keras sequential model based on hp defined in hp object
+    Returns:
+        keras.Model: A compiled Keras Sequential model.
     """
-    # input layer
     model = keras.Sequential()
-    model.add(keras.layers.Input(shape=(784,)))
+    model.add(keras.layers.InputLayer(input_shape=(784,)))
 
-    # hidden layer
+    # Tunable hidden layers
     for i in range(hp.Int('num_layers', min_value=1, max_value=2)):
         model.add(keras.layers.Dense(
             units=hp.Int('units', min_value=4, max_value=12, step=4),
             activation=hp.Choice('activation', values=['relu', 'sigmoid'])
         ))
 
-    # output layer
+    # Output layer
     model.add(keras.layers.Dense(10, activation='softmax'))
 
-    # compiler and optimizer
-
+    # Compile model
     model.compile(
         optimizer=keras.optimizers.Adam(
-            hp.Choice('learning_rate', values=[1e-2, 1e-3])
-        )
+            learning_rate=hp.Choice('learning_rate', values=[1e-2, 1e-3])
+        ),
+        loss='categorical_crossentropy',
+        metrics=['accuracy']
     )
 
     return model
