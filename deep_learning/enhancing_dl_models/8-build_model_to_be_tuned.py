@@ -36,7 +36,6 @@ def build_model(hp):
     model.add(keras.layers.Input(shape=(784,)))
 
     # hidden layer
-    'how to define 1-2 num_layers'
     for i in range(hp.Int('num_layers', min_value=1, max_value=2)):
         model.add(keras.layers.Dense(
             units=hp.Int('units', min_value=4, max_value=12, step=4),
