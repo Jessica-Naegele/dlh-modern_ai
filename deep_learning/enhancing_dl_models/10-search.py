@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 """
 --- TASK 10 ---
-Function performing hyperparameter tuning and retrieving the best hyperaparmeters.
-returns the hyperparameter configuraiton that led to the best model, as an object.
-args: tuner, training (target) data, epochs, validation_split and verbose
+Function performing hyperparameter tuning and retrieving the best
+hyperaparmeters. It returns the hyperparameter configuraiton
+that led to the best model, as an object. args: tuner, training
+(target) data, epochs, validation_split and verbose
 """
 
 import keras_tuner
@@ -21,7 +22,7 @@ def search_and_return_best_model(
     function returning best hyperparameter configuration
 
     args:
-    - tuner: 
+    - tuner:
         - Hyperband,
         - RandomSearch,
         - BayesianOptimization
@@ -42,7 +43,7 @@ def search_and_return_best_model(
         validation_split=validation_split,
         verbose=verbose
         )
-    
+
     best = tuner.get_best_hyperparameters(num_trials=1)[0]
 
     return best
