@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """
 --- TASK 1 ---
-function training a CNN model. Herefore it compiles and trains it. with the following
-parameters: model, epochs, batch_size, optimizer_name, optimizer_params
+function training a CNN model. Herefore it compiles and trains it
+with the following parameters: model, epochs, batch_size,
+optimizer_name, optimizer_params
 """
 
 from tensorflow import keras
@@ -17,7 +18,8 @@ def compile_and_train_cnn(
     x_val,
     y_val,
     optimizer_name='adam',
-    optimizer_params=None):
+    optimizer_params=None
+):
     """
     function to train and compile a CNN model.
 
@@ -31,10 +33,10 @@ def compile_and_train_cnn(
     returns:
     - trained CNN model, raining history object
     """
-    print(optimizer_params)
+    # print(optimizer_params)
     # print(bool(optimizer_params))
 
-    if bool(optimizer_params) == False:
+    if not bool(optimizer_params):
         model.compile(
             optimizer=optimizer_name,
             loss='categorical_crossentropy',
@@ -52,13 +54,13 @@ def compile_and_train_cnn(
             metrics=['accuracy']
         )
 
-
     history = model.fit(
         x=x_train,
         y=y_train,
         batch_size=batch_size,
         epochs=epochs,
-        validation_data=(x_val, y_val)
+        validation_data=(x_val, y_val),
+        verbose=0
     )
 
     return model, history
