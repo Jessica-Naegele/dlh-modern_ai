@@ -60,7 +60,7 @@ def compile_and_train_cnn(
         batch_size=batch_size,
         epochs=epochs,
         validation_data=(x_val, y_val),
-        # verbose=0
+        verbose=2
     )
 
     return model, history
