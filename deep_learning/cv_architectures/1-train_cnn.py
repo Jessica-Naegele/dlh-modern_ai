@@ -49,7 +49,7 @@ def compile_and_train_cnn(
         }
         optimizer_instance = keras.optimizers.get(optimizer_config)
         model.compile(
-            optimizer=optimizer_config,
+            optimizer=optimizer_instance,
             loss='categorical_crossentropy',
             metrics=['accuracy']
         )
