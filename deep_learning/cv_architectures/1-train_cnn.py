@@ -36,22 +36,20 @@ def compile_and_train_cnn(
     # print(optimizer_params)
     # print(bool(optimizer_params))
 
-    if not bool(optimizer_params):
-        model.compile(
-            optimizer=optimizer_name,
-            loss='categorical_crossentropy',
-            metrics=['accuracy']
-            )
-    else:
-        optimizer_config = {
-            'class_name': optimizer_name,
-            'config': optimizer_params
-        }
-        optimizer_instance = keras.optimizers.get(optimizer_config)
-        model.compile(
-            optimizer=optimizer_instance,
-            loss='categorical_crossentropy',
-            metrics=['accuracy']
+    if optimizer_params is None:
+        optimizer_params = {}
+
+    # Get the base optimizer class (e.g., Adam, SGD)
+    opt_class = keras.optimizers.get(optimizer_name).__class__
+
+    # Instantiate it with the unpacked parameters
+    optimizer_instance = opt_class(**optimizer_params)
+
+    # Compile the model once
+    model.compile(
+        optimizer=optimizer_instance,
+        loss='categorical_crossentropy',
+        metrics=['accuracy']
         )
 
     history = model.fit(
