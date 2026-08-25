@@ -15,7 +15,7 @@ def bottleneck_block(
         stride=1,
         downsample=False,
         name=None
-    ):
+):
     """
     implement ResNet bottleneck residual block
 
@@ -41,14 +41,14 @@ def bottleneck_block(
     - A final ReLU activation after adding the shortcut.
     """
     bn = x
-    
+
     # 1x1 convolution --> reduces number of channels followed
     # by batchnorm
     bn = keras.layers.Conv2D(
         filters=filters,
-        kernel_size=(1,1),
+        kernel_size=(1, 1),
         strides=stride,
-        use_bias=False, 
+        use_bias=False,
         name=f"{name}_conv1" if name else None
         )(bn)
     bn = keras.layers.BatchNormalization(
@@ -62,7 +62,7 @@ def bottleneck_block(
     # 3x3 convolution
     bn = keras.layers.Conv2D(
         filters=filters,
-        kernel_size=(3,3),
+        kernel_size=(3, 3),
         padding='same',
         use_bias=False,
         name=f"{name}_conv2" if name else None
@@ -78,7 +78,7 @@ def bottleneck_block(
     # 1x1 convolution
     bn = keras.layers.Conv2D(
         filters=filters * 4,
-        kernel_size=(1,1),
+        kernel_size=(1, 1),
         use_bias=False,
         name=f"{name}_conv3" if name else None
         )(bn)
@@ -90,7 +90,7 @@ def bottleneck_block(
     if downsample:
         sc = keras.layers.Conv2D(
             filters=filters * 4,
-            kernel_size=(1,1),
+            kernel_size=(1, 1),
             strides=stride,
             use_bias=False,
             name=f"{name}_shortcut_conv" if name else None
