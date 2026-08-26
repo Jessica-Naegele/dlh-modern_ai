@@ -16,7 +16,7 @@ def bottleneck_block(
         name=None
 ):
     """
-    implement ResNet bottleneck residual block
+    implement bottleneck block
     """
     bn = x
     bn = keras.layers.Conv2D(
@@ -56,8 +56,6 @@ def bottleneck_block(
     bn = keras.layers.BatchNormalization(
         name=f"{name}_bn3" if name else None
         )(bn)
-
-    # introducing the shortcut
     if downsample:
         sc = keras.layers.Conv2D(
             filters=filters * 4,
@@ -69,10 +67,8 @@ def bottleneck_block(
         sc = keras.layers.BatchNormalization(
             name=f"{name}_shortcut_bn" if name else None
             )(sc)
-
     else:
         sc = x
-
     out = keras.layers.add(
         [bn, sc],
         name=f"{name}_add" if name else None
@@ -81,7 +77,6 @@ def bottleneck_block(
         'relu',
         name=f"{name}_out" if name else None
         )(out)
-
     return out
 
 
