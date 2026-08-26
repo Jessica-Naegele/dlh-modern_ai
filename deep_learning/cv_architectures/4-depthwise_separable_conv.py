@@ -2,6 +2,7 @@
 """
 Module containing depthwise_separable_conv function
 """
+
 from tensorflow import keras as K
 
 
@@ -21,7 +22,8 @@ def depthwise_separable_conv(X, filters, stride=1):
     x = K.layers.DepthwiseConv2D(
         kernel_size=(3, 3),
         strides=stride,
-        padding='same'
+        padding='same',
+        use_bias=False
     )(X)
     x = K.layers.BatchNormalization()(x)
     x = K.layers.ReLU()(x)
@@ -31,7 +33,8 @@ def depthwise_separable_conv(X, filters, stride=1):
         filters=filters,
         kernel_size=(1, 1),
         strides=1,
-        padding='same'
+        padding='same',
+        use_bias=False
     )(x)
     x = K.layers.BatchNormalization()(x)
     x = K.layers.ReLU()(x)

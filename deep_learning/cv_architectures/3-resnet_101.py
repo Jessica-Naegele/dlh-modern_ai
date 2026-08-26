@@ -101,7 +101,7 @@ def make_layer(x, blocks, filters, stride=1, name=None):
 
 
 def build_resnet101(input_shape=(224, 224, 3), num_classes=1000):
-    """ function to create a resnet architecure
+    """ function to create a architecure
 
     - args:
     - input_shape: tuple
