@@ -85,7 +85,7 @@ def mobilenet(input_shape=(224, 224, 3), num_classes=1000):
 
     # 4. Classification Head
     x = keras.layers.GlobalAveragePooling2D()(x)
-    outputs = K.layers.Dense(units=num_classes, activation="softmax")(x)
+    outputs = keras.layers.Dense(units=num_classes, activation="softmax")(x)
 
     # 5. Construct Keras Model
     model = keras.Model(inputs=inputs, outputs=outputs, name="MobileNetV1")
